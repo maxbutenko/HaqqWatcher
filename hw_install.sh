@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "  "
 if test -d $HOME/haqqwatcher/; then echo "Reconfigurate..."; else mkdir /$HOME/haqqwatcher; fi
-if test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh &&chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
+if ! test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh && chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
 if test -f $HOME/haqqwatcher/.env; then rm $HOME/haqqwatcher/.env; fi
 # variables
 IP=$(curl ifconfig.me 2> /dev/null)
