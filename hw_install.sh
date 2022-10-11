@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "  "
 if test -d $HOME/haqqwatcher/; then echo "Reconfigurate..."; else mkdir /$HOME/haqqwatcher; fi
-if ! test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh && chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
+if test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh && chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
 if test -f $HOME/haqqwatcher/.env; then rm $HOME/haqqwatcher/.env; fi
 # variables
 IP=$(curl ifconfig.me 2> /dev/null)
@@ -9,12 +9,14 @@ FS_ALERT_INFO=15
 FS_ALERT_CRITICAL=5
 MISSED_BLOCKS_ALERT=20
 MEM_ALERT=2
+HAQQD=$(which haqqd)
 #
 echo 'IP='$IP>> $HOME/haqqwatcher/.env
 echo 'FS_ALERT_INFO='$FS_ALERT_INFO>> $HOME/haqqwatcher/.env
 echo 'FS_ALERT_CRITICAL='$FS_ALERT_CRITICAL>> $HOME/haqqwatcher/.env
 echo 'MISSED_BLOCKS_ALERT='$MISSED_BLOCKS_ALERT>> $HOME/haqqwatcher/.env
 echo 'MEM_ALERT='$MEM_ALERT>> $HOME/haqqwatcher/.env
+echo 'HAQQD='$HAQQD>> $HOME/haqqwatcher/.env
 #
 echo "  "
 echo "#################################################"
