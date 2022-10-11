@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "  "
 if test -d $HOME/haqqwatcher/; then echo "Reconfigurate..."; else mkdir /$HOME/haqqwatcher; fi
-if test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh && chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
+if ! test -f $HOME/haqqwatcher/haqqwatcher.sh; then wget -q -O /root/haqqwatcher/haqqwatcher.sh https://github.com/maxbutenko/HaqqWatcher/raw/main/haqqwatcher.sh && chmod +x /root/haqqwatcher/haqqwatcher.sh; fi
 if test -f $HOME/haqqwatcher/.env; then rm $HOME/haqqwatcher/.env; fi
 # variables
 IP=$(curl ifconfig.me 2> /dev/null)
@@ -47,7 +47,7 @@ MESSAGE=" ✅ HAQQ WATCHER info ✅%0A Test message %0A [$IP] | $MONIKER | Free 
 curl -s -X POST $TG_URL -d chat_id=$TG_CHAT_ID -d text="$MESSAGE"
 echo "  "
 read -p "Did you receive test message with your moniker? (y/n) " RESULT
-if [ "$RESULT" = "y" ]; then echo "Great! All systems ready.";
+if [ "$RESULT" = "y" ]; then echo "Great! Install service now";
 else
 echo "  "
 echo "Please check telegram bot TOKEN and chat ID and run script again "
@@ -55,3 +55,22 @@ echo "  "
 sleep 3
 exit
 fi
+tee /etc/systemd/system/haqqwatcher.service > /dev/null <<EOF
+[Unit]
+Description=Haqq Watcher
+After=network.target
+[Service]
+User=root
+ExecStart=/bin/bash /root/haqqwatcher/haqqwatcher.sh
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65535
+[Install]
+WantedBy=multi-user.target
+EOF
+systemctl daemon-reload
+systemctl enable haqqwatcher
+systemctl restart haqqwatcher
+echo "  "
+echo "You can check logs: journalctl -u haqqwatcher -f -o cat"
+echo "  "
