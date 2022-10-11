@@ -1,4 +1,9 @@
 #!/bin/bash
+i=0
+while true;
+do
+let i++
+echo "cycle " $i
 #variables
 source /root/haqqwatcher/.env
 freeMem=$(free -g |tail -n2|awk '{print $6}')
@@ -81,3 +86,17 @@ if [ "$freeMem" -le "$MEM_ALERT" ]; then
 else
 if test -f $HOME/haqqwatcher/.mem; then rm $HOME/haqqwatcher/.mem; fi
 fi
+
+#Checking service  updates (also you can check manually on http://haqqwatcher.online)
+updates=$(curl --head --silent http://haqqwatcher.online/updates | head -n 1)
+if echo "$updates" | grep -q 200; then
+          if ! $(test -f $HOME/haqqwatcher/.updates); then
+           msgUpdates=$(curl --silent http://haqqwatcher.online/updates)
+           curl -s -X POST $TG_URL -d chat_id=$TG_CHAT_ID -d text="$msgUpdates"
+           touch $HOME/haqqwatcher/.updates
+          fi
+else
+   if test -f $HOME/haqqwatcher/.updates; then rm $HOME/haqqwatcher/.updates; fi
+fi
+sleep 15
+done
