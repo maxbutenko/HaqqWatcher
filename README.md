@@ -10,7 +10,7 @@ The script is installed on the machine with the node and allows you to receive t
 -   New proposal 
 -   Small amount of free RAM on the node
 -   Running out of disk space
--   other notifications
+-   other notifications (up-to-date information will be on [haqqwatcher.online](http://haqqwatcher.online))
 
 When a notification is received, the message contains a hint for how to react to the event (for example, how to vote or a command to unjail), which can be useful if only a phone is at hand.
 
