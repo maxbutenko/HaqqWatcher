@@ -1,4 +1,5 @@
 ## HAQQ WATCHER
+Update: added node map on [haqqwatcher.online](http://haqqwatcher.online) 
 
 This small utility can be useful if you want to receive information about the status of the validator in Telegram without depending on third-party services.
 
