@@ -78,14 +78,14 @@ fi
 
 #Memory check
 
-if [ "$freeMem" -le "$MEM_ALERT" ]; then
-        if ! $(test -f $HOME/haqqwatcher/.mem); then
-          curl -s -X POST $TG_URL -d chat_id=$TG_CHAT_ID -d text="$msgMem"
-          touch $HOME/haqqwatcher/.mem
-        fi
-else
-if test -f $HOME/haqqwatcher/.mem; then rm $HOME/haqqwatcher/.mem; fi
-fi
+#if [ "$freeMem" -le "$MEM_ALERT" ]; then
+#        if ! $(test -f $HOME/haqqwatcher/.mem); then
+#          curl -s -X POST $TG_URL -d chat_id=$TG_CHAT_ID -d text="$msgMem"
+#          touch $HOME/haqqwatcher/.mem
+#        fi
+#else
+#if test -f $HOME/haqqwatcher/.mem; then rm $HOME/haqqwatcher/.mem; fi
+#fi
 
 #Checking service  updates (also you can check manually on http://haqqwatcher.online)
 updates=$(curl --head --silent http://haqqwatcher.online/updates | head -n 1)
